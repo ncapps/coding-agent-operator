@@ -24,8 +24,19 @@ Guidance for Claude Code sessions in this repository.
 | `docs/reference.md` | Dependencies, image builds, home hardware, backlog, risks |
 | `docs/design-history.md` | Decisions already made and alternatives rejected, with reasons |
 | `docs/adr/` | Architecture decision records |
+| `docs/git-workflow.md` | Branching, worktrees, PRs, merging, CI checks |
 
 Before proposing a change, check `docs/design-history.md` so you don't re-propose something already rejected.
+
+## Git workflow
+
+Read `docs/git-workflow.md` before your first branch, commit or PR in a session.
+
+- Work on one branch per session, named `<type>/<issue>-<slug>`, in its own worktree when sessions run in parallel. `factory/` branches belong to the operator.
+- Start from an issue. If none exists, ask Nick before creating one.
+- Commit signed, keeping the `Co-Authored-By` trailer. Let the lefthook hooks run.
+- Open the PR with a Conventional Commit title and a body that follows `.github/pull_request_template.md`, including `Closes #N`. Nick merges.
+- GitHub settings belong to Nick: print `gh api` commands for him to run.
 
 ## Markers in the docs
 
@@ -45,7 +56,7 @@ Before proposing a change, check `docs/design-history.md` so you don't re-propos
 ## Conventions (to be confirmed when code starts)
 
 - Go for the operator. Pin tool versions in `.mise.toml` and `go.mod`.
-- Conventional Commits.
+- Conventional Commits in PR titles; squash merges put them on `main` (see Git workflow).
 - Every reconciler change needs an envtest case.
 - CRD changes: regenerate, update samples, and add an ADR for any API change.
 - Docs: plain, direct English; short sentences; tables for comparisons.
