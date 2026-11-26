@@ -49,3 +49,17 @@ Before proposing a change, check `docs/design-history.md` so you don't re-propos
 - Every reconciler change needs an envtest case.
 - CRD changes: regenerate, update samples, and add an ADR for any API change.
 - Docs: plain, direct English; short sentences; tables for comparisons.
+
+## Agent skills
+
+### Issue tracker
+
+Issues and specs live in GitHub Issues for `ncapps/coding-agent-operator`, managed with the `gh` CLI. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default vocabulary: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`. See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
