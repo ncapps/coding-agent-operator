@@ -109,7 +109,7 @@ Nick merges. Wait for all checks to pass, then:
 gh pr merge 12 --squash --delete-branch
 ```
 
-The repo only allows squash merges. The commit title is the PR title. The body is the branch's commit messages, which keeps the `Co-Authored-By` trailers. **(verify)** Check that the trailer survived on the first merge.
+The repo only allows squash merges. The commit title is the PR title. The body is the branch's commit messages, which keeps the `Co-Authored-By` trailers. GitHub writes them as `Co-authored-by:`. GitHub signs the squash commit, so it shows as Verified.
 
 ## CI checks
 

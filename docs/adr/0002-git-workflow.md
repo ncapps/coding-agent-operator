@@ -38,5 +38,5 @@ The workflow has to stay simple for one person. GitHub should enforce it, not ha
 - With no bypass, fixing a broken required check means editing the ruleset.
 - Brief §8 says CODEOWNERS enforces protected paths on GitHub's side. That only holds once PRs come from a separate identity and code-owner review is required.
 - Local sessions hold a broad token. **Revisit** the identity, approvals and code-owner review when any of these happens: Claude Code runs unattended outside the operator, a second contributor joins, or auto-merge (L4) is enabled.
-- **(verify)** On the first merge, confirm the squash commit kept the `Co-Authored-By` trailer.
+- Squash commits keep the `Co-Authored-By` trailer. Checked on the first merge (PR #2, commit 0aeba03): GitHub kept it as `Co-authored-by:`, and the commit shows as Verified.
 - Tool versions are pinned in two places: `.mise.toml` for local use and `pr.yml` for CI. Keep them in step until Renovate arrives.
