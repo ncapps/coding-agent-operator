@@ -159,7 +159,7 @@ Triage labels: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human
 
 ## 5. Architecture
 
-```
+```text
 ┌─────────────── GitHub ──────────────────┐
 │ issues · labels · comments · PRs · checks│
 └───▲──────────────▲──────────────┬───────┘
@@ -244,6 +244,7 @@ A missing PR body gets a generated fallback rather than failing the run. **(veri
 **(decision)** In v1 the factory runs no planning stages. This removes async grilling, session suspend and resume, and any agent token that can write issues.
 
 **Day-to-day flow:**
+
 1. Nick opens Claude Code in the consumer repo and runs `/grill-with-docs` → `/to-spec` → `/to-tickets`.
 2. `to-tickets` publishes sub-issues with blocking edges and the `ready-for-agent` label.
 3. The factory picks up each ticket once its blockers are merged (Phase 1: any labelled ticket; Phase 2: frontier-aware).
@@ -278,6 +279,7 @@ The controller never executes repo code itself.
 ## 6. Plugins and the consumer contract
 
 **Consumer repo contract (from Phase 0):**
+
 - `make verify`, under about 3 minutes, also run as a required CI check.
 - `CLAUDE.md` with project conventions.
 - `.factory.yaml`: agent image, autonomy level, model per stage.

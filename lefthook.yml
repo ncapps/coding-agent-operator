@@ -1,0 +1,11 @@
+# Fast local checks only. CI (.github/workflows/pr.yml) is the gate.
+# Tools come from .mise.toml; `mise exec` finds them even when mise isn't activated in the shell.
+# Install the hooks with `lefthook install`.
+pre-commit:
+  parallel: true
+  jobs:
+    - name: markdownlint
+      glob: "*.md"
+      run: mise exec -- markdownlint-cli2 {staged_files}
+    - name: gitleaks
+      run: mise exec -- gitleaks git --pre-commit --staged --redact --no-banner

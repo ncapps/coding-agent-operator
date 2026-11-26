@@ -25,6 +25,7 @@ The operator automates this loop. If the loop doesn't work by hand, the operator
 Use the skills by hand in Claude Code: `/grill-with-docs` → `/to-spec` → `/to-tickets` → `/implement`. This gives first-hand experience of each skill before automating it.
 
 The consumer repo must end up with:
+
 - `make verify` (format, lint, test) running in under about 3 minutes.
 - A CI workflow running `make verify` as a required check on `main`.
 - `CLAUDE.md`, `.mise.toml` and a draft `.factory.yaml`.
@@ -41,12 +42,14 @@ One Dockerfile: Claude Code (pinned), the vendored skills (pinned), git, Go tool
 1. Clone the consumer repo into a fresh workspace folder and create branch `factory/<issue>-<slug>`.
 2. Fetch the issue title and body.
 3. Run the agent container with the workspace mounted and a **read-only** GitHub token:
-   ```
+
+   ```sh
    claude -p "<implement prompt>" \
      --output-format stream-json \
      --permission-mode <mode> --allowedTools <list> \
      > .factory/transcript.jsonl
    ```
+
 4. After the container exits, **the script** (not the agent) pushes the branch and opens a draft PR, using `.factory/pr-body.md` if present.
 5. Wait for the CI check and print the result.
 

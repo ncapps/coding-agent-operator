@@ -1,0 +1,3 @@
+# Templates here are fragments of an issue or PR body, so they start at "##".
+extends: ../.markdownlint.yaml
+MD041: false

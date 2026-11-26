@@ -1,0 +1,7 @@
+# Host tools, pinned. Used by lefthook.yml and for running CI checks locally.
+# CI pins the same versions in .github/workflows/pr.yml; keep them in step.
+[tools]
+lefthook = "2.2.2"
+gitleaks = "8.30.1"
+lychee = "0.24.2"
+"npm:markdownlint-cli2" = "0.24.0"

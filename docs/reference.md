@@ -86,6 +86,7 @@ Keep the k3s image (local) and kind node image (CI) on the same Kubernetes minor
 **Per-pod limits (starting point):** agent pod requests 1 CPU / 2 GB, limits 3 CPU / 6 GB. Tune from Phase 0 measurements.
 
 **Host setup:**
+
 - Turn off sleep so overnight runs aren't interrupted.
 - Keep about 100 GB free. On a 128 or 256 GB internal disk, put the VM disk on an external SSD.
 - Prune images and old workspaces on a schedule.
@@ -121,6 +122,7 @@ Docker Desktop isn't required. Colima and OrbStack run a Docker Engine in their 
 - **CI:** push to GHCR. Multi-arch, SBOM and signing arrive in Phase 7.
 
 **No upfront comparison spike.** Revisit the choice, timeboxed to half a day and recorded as an ADR, only if one of these happens:
+
 - Agent image builds exceed about 10 minutes or regularly break the dev loop.
 - The factory needs to build images **inside the cluster** (per-repo toolchain images).
 - Reproducible builds or provenance become a hardening requirement that buildx can't meet.
