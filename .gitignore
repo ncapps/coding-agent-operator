@@ -1,0 +1,22 @@
+# OS and editors
+.DS_Store
+.idea/
+.vscode/
+
+# Go
+/bin/
+*.test
+*.out
+coverage.*
+
+# Secrets and local config
+.env
+*.env
+*.pem
+*.key
+.claude/settings.local.json
+
+# Phase 0 workspaces and raw (unredacted) transcripts
+/workspaces/
+/tmp/
+*.raw.jsonl
