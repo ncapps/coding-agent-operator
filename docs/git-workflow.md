@@ -113,7 +113,7 @@ The repo only allows squash merges. The commit title is the PR title. The body i
 
 ## CI checks
 
-`.github/workflows/pr.yml` runs on every PR. All four jobs are required checks on `main`.
+`.github/workflows/pr.yml` runs on every PR. All five jobs are required checks on `main`.
 
 | Check | Tool | Run it locally |
 |---|---|---|
@@ -121,6 +121,7 @@ The repo only allows squash merges. The commit title is the PR title. The body i
 | `markdownlint` | markdownlint-cli2 with `.markdownlint.yaml` | `markdownlint-cli2 "**/*.md"` |
 | `links` | lychee, offline (relative links and anchors) | `lychee --offline --include-fragments --hidden './**/*.md'` |
 | `gitleaks` | gitleaks over the PR's commits | `gitleaks git --redact .` |
+| `next-issue` | Typecheck and `node:test` for the `/next-issue` board planner | `npm run typecheck && npm test` in `.claude/skills/next-issue` |
 
 Actions are pinned to full commit SHAs. Tool versions in `pr.yml` match `.mise.toml`; change both together. A required check matches by job name, so renaming a job means updating the ruleset in the same change.
 
@@ -130,7 +131,7 @@ Applied by the maintainer with `gh api`, not by agents.
 
 | Setting | Value |
 |---|---|
-| `main` ruleset | PR required, 0 approvals, the four checks above, linear history, signed commits, no force pushes or deletion, no bypass |
+| `main` ruleset | PR required, 0 approvals, the five checks above, linear history, signed commits, no force pushes or deletion, no bypass |
 | Merge methods | Squash only; title from PR title, body from commit messages |
 | Head branches | Deleted after merge |
 | Secret scanning | On, with push protection |

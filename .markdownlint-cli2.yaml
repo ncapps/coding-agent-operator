@@ -1,0 +1,3 @@
+# Options for markdownlint-cli2. Rules stay in .markdownlint.yaml.
+# Skip ignored files, such as node_modules, when linting "**/*.md" locally.
+gitignore: true

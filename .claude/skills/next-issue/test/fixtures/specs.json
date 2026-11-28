@@ -1,0 +1,75 @@
+{
+  "branches": ["main", "origin/main"],
+  "issues": [
+    {
+      "number": 20,
+      "title": "Spec: board and next-issue skill",
+      "state": "OPEN",
+      "labels": ["ready-for-agent"],
+      "parent": null,
+      "subIssues": [21, 22],
+      "openBlockers": [],
+      "pullRequests": []
+    },
+    {
+      "number": 21,
+      "title": "First ticket of #20",
+      "state": "OPEN",
+      "labels": ["ready-for-agent"],
+      "parent": 20,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": []
+    },
+    {
+      "number": 22,
+      "title": "Second ticket of #20",
+      "state": "OPEN",
+      "labels": ["ready-for-human"],
+      "parent": 20,
+      "subIssues": [],
+      "openBlockers": [21],
+      "pullRequests": []
+    },
+    {
+      "number": 23,
+      "title": "Spec: waiting for tickets",
+      "state": "OPEN",
+      "labels": ["ready-for-agent"],
+      "parent": null,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": []
+    },
+    {
+      "number": 24,
+      "title": "Untitled epic with tickets",
+      "state": "OPEN",
+      "labels": ["ready-for-agent"],
+      "parent": null,
+      "subIssues": [25],
+      "openBlockers": [],
+      "pullRequests": []
+    },
+    {
+      "number": 25,
+      "title": "Only ticket of #24",
+      "state": "OPEN",
+      "labels": ["ready-for-agent"],
+      "parent": 24,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": []
+    },
+    {
+      "number": 26,
+      "title": "An idea to grill",
+      "state": "OPEN",
+      "labels": ["needs-triage"],
+      "parent": null,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": []
+    }
+  ]
+}

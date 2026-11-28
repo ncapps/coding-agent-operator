@@ -80,3 +80,25 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_VERSION: 8.30.1
           GITLEAKS_ENABLE_COMMENTS: "false"
+
+  # The /next-issue skill's board planner. No GitHub or Claude access: the
+  # tests feed JSON fixtures to a pure module.
+  next-issue:
+    name: next-issue
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+    defaults:
+      run:
+        working-directory: .claude/skills/next-issue
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 26.13.1
+      - run: npm ci --ignore-scripts
+      - run: npm run typecheck
+      - run: npm test

@@ -1,0 +1,18 @@
+{
+  "name": "next-issue",
+  "private": true,
+  "description": "Scripts behind the /next-issue project skill.",
+  "type": "module",
+  "engines": {
+    "node": ">=26.13.1"
+  },
+  "scripts": {
+    "board": "node scripts/board.ts",
+    "test": "node --test 'test/**/*.test.ts'",
+    "typecheck": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "26.6.11",
+    "typescript": "7.0.2"
+  }
+}
