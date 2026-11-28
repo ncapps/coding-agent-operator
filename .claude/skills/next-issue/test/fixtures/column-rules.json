@@ -1,0 +1,130 @@
+{
+  "branches": [
+    "main",
+    "feat/4-local-branch",
+    "origin/main",
+    "origin/HEAD",
+    "origin/docs/5-remote-branch",
+    "fix/6-closed-issue",
+    "origin/fix/6-closed-issue",
+    "feat/7-in-review",
+    "origin/feat/7-in-review",
+    "chore/80-unrelated",
+    "feat/x8-not-a-number",
+    "8-no-type"
+  ],
+  "issues": [
+    {
+      "number": 1,
+      "title": "A closed idea",
+      "state": "CLOSED",
+      "labels": [],
+      "parent": null,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": []
+    },
+    {
+      "number": 2,
+      "title": "A ticket with an open pull request",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": null,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": [
+        {
+          "number": 102,
+          "state": "OPEN"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "title": "A ticket whose only pull request was closed unmerged",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": null,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": [
+        {
+          "number": 103,
+          "state": "CLOSED"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "title": "A ticket with a local branch",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": null,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": []
+    },
+    {
+      "number": 5,
+      "title": "An idea with an origin branch only",
+      "state": "OPEN",
+      "labels": [],
+      "parent": null,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": []
+    },
+    {
+      "number": 6,
+      "title": "A closed issue with a branch",
+      "state": "CLOSED",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": null,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": [
+        {
+          "number": 106,
+          "state": "MERGED"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "title": "A ticket with an open pull request and a branch",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": null,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": [
+        {
+          "number": 107,
+          "state": "OPEN"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "title": "A ticket whose number only prefixes a branch",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": null,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": []
+    }
+  ]
+}

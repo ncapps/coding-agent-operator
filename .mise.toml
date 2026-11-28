@@ -5,3 +5,5 @@ lefthook = "2.2.2"
 gitleaks = "8.30.1"
 lychee = "0.24.2"
 "npm:markdownlint-cli2" = "0.24.0"
+# Runs the /next-issue skill's scripts with built-in type stripping (no build step).
+node = "26.13.1"

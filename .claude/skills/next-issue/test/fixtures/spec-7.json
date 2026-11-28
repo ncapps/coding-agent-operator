@@ -1,0 +1,216 @@
+{
+  "branches": [
+    "main",
+    "origin/main"
+  ],
+  "issues": [
+    {
+      "number": 7,
+      "title": "Spec: architect slice 1 — read-only decision graph and diagrams",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": null,
+      "subIssues": [
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22
+      ],
+      "openBlockers": [],
+      "pullRequests": []
+    },
+    {
+      "number": 9,
+      "title": "How do we measure whether the architect improves human–LLM communication?",
+      "state": "OPEN",
+      "labels": [
+        "needs-triage"
+      ],
+      "parent": null,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": []
+    },
+    {
+      "number": 11,
+      "title": "Validate a decision graph file as a Claude Code hook would",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [],
+      "pullRequests": []
+    },
+    {
+      "number": 12,
+      "title": "Live decision graph page",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [
+        11
+      ],
+      "pullRequests": []
+    },
+    {
+      "number": 13,
+      "title": "The page survives bad edits",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [
+        12
+      ],
+      "pullRequests": []
+    },
+    {
+      "number": 14,
+      "title": "Decision detail on click",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [
+        12
+      ],
+      "pullRequests": []
+    },
+    {
+      "number": 15,
+      "title": "Switch between open planning sessions",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [
+        12
+      ],
+      "pullRequests": []
+    },
+    {
+      "number": 16,
+      "title": "Architecture and flow diagrams, highlighted by decision",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [
+        14
+      ],
+      "pullRequests": []
+    },
+    {
+      "number": 17,
+      "title": "Sequence diagrams",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [
+        16
+      ],
+      "pullRequests": []
+    },
+    {
+      "number": 18,
+      "title": "The page in the desktop app's Browser pane",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [
+        12
+      ],
+      "pullRequests": []
+    },
+    {
+      "number": 19,
+      "title": "Architect plugin with the decision-graph skill",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [
+        11
+      ],
+      "pullRequests": []
+    },
+    {
+      "number": 20,
+      "title": "/planning-session: start and resume",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [
+        19,
+        12
+      ],
+      "pullRequests": []
+    },
+    {
+      "number": 21,
+      "title": "Close a planning session",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-agent"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [
+        20,
+        17
+      ],
+      "pullRequests": []
+    },
+    {
+      "number": 22,
+      "title": "Slice 1 acceptance run",
+      "state": "OPEN",
+      "labels": [
+        "ready-for-human"
+      ],
+      "parent": 7,
+      "subIssues": [],
+      "openBlockers": [
+        21,
+        18,
+        15,
+        13
+      ],
+      "pullRequests": []
+    }
+  ]
+}
