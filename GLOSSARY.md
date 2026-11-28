@@ -47,6 +47,14 @@ _Avoid_: PRD
 A tracker issue for one independently shippable piece of work, with acceptance criteria and blocking edges. The only thing the factory receives from planning.
 _Avoid_: task, story
 
+**Board**:
+The GitHub project that shows every open issue in one column. It is a copy: labels, sub-issues, blockers and pull requests are the truth, and the board is synced to match them.
+_Avoid_: project (alone), kanban
+
+**Column**:
+Where an issue sits on the board: Backlog, Ready, In progress, In review or Done. Grilling, writing a spec and splitting it into tickets all happen to issues in Backlog; tickets start in Ready.
+_Avoid_: status, state, lane
+
 **Slice**:
 One increment of the architect that is usable on its own, such as slice 1 (read-only).
 _Avoid_: phase (that means the factory roadmap)
