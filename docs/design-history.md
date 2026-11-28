@@ -4,17 +4,17 @@ How the design reached its current shape (Nov 23–26, 2026), written so later s
 
 ## Goals that shaped everything
 
-- Personal project **and** a platform-engineering portfolio piece for a job search.
+- A working workflow for real projects **and** a reference design for governed agent execution on Kubernetes.
 - Runs on a Mac mini at home; deployable to enterprise Kubernetes.
 - Matt Pocock's skills drive the workflow; autonomy is configurable.
 - Runs on a Claude Max subscription at home.
-- One factory serves many portfolio repos and maintains their plugins.
+- One factory serves many consumer repos and maintains their plugins.
 
 ## Decisions and their reasons
 
 | # | Decision | Reason | Rejected alternatives |
 |---|---|---|---|
-| 1 | **Thin custom Go operator**, reusing existing parts | Hard problems are gates, recovery and limits, which a reconciler models naturally. A designed API is the strongest portfolio signal | Argo Workflows / Events, Tekton (glue sprawls, CI-shaped); Temporal (doubles moving parts on a Mac mini); forking Kelos (upstream-dependent); Python operator (weaker K8s signal) |
+| 1 | **Thin custom Go operator**, reusing existing parts | Hard problems are gates, recovery and limits, which a reconciler models naturally. A designed API is the strongest signal of the design | Argo Workflows / Events, Tekton (glue sprawls, CI-shaped); Temporal (doubles moving parts on a Mac mini); forking Kelos (upstream-dependent); Python operator (weaker K8s signal) |
 | 2 | **v1 = GitHub + Claude Code only**, behind interfaces | Scope for one part-time engineer | Multi-harness (Codex, Gemini) and GitLab in v1; moved to v2 |
 | 3 | **Planning stays local and interactive**; the operator only executes tickets | `grill-with-docs`, `to-spec`, `to-tickets` are conversations; forcing them through issue comments was the most fragile part of the plan | Async grilling via comments with suspend/resume; a `gh` shim; issues-write tokens for planning pods |
 | 4 | **Prove the loop first (Phase 0)** with a script and one container | The workflow was unproven headless; real transcripts and token numbers are needed before designing the operator | Starting with the operator |
@@ -25,7 +25,7 @@ How the design reached its current shape (Nov 23–26, 2026), written so later s
 | 9 | **The consumer repo's required CI check is the gate** | The controller never executes untrusted repo code | Controller re-running `make verify` itself |
 | 10 | **Protected paths** (build, CI, agent config) always go to a human | Agents must not weaken their own gate | — |
 | 11 | **Gate approvals only from trusted humans** | Bot-applied labels must not satisfy gates | — |
-| 12 | **Session slots and schedule windows** reserve subscription capacity | The factory shares the Max plan with Nick's own interactive use | Fair-share only between projects |
+| 12 | **Session slots and schedule windows** reserve subscription capacity | The factory shares the Max plan with the maintainer's own interactive use | Fair-share only between projects |
 | 13 | **Polling first**, webhooks and a tunnel later | No inbound networking needed from home for the MVP | Webhooks from day one |
 | 14 | **ko for Go images, buildx for the agent image**; re-compare only on a trigger | An up-front 7-tool comparison was not worth the time | Mandatory comparison spike in Phase 1 |
 | 15 | **Evals kept small**: Harbor-format golden tasks, `skill-creator` | Statistical gates and canaries cost tokens and are ceremony at this scale | Building an eval engine; in-cluster eval platform in v1 |
@@ -52,7 +52,7 @@ How the design reached its current shape (Nov 23–26, 2026), written so later s
 
 ## Next steps
 
-1. Push this repo to GitHub as `ncapps/coding-agent-operator`.
+1. Push this repo to GitHub as `ncapps/coding-agent-tools`.
 2. Install Matt Pocock's skills and run `/setup-matt-pocock-skills`.
 3. `/grill-with-docs` on brief §0, §2, §5 and §12, then the Phase 0 and Phase 1 specs. Settle open questions 13 (API group) and 14 (plugin prefix) early.
 4. Start Phase 0.

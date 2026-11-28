@@ -141,7 +141,7 @@ Candidates if revisited: Podman + buildah, standalone BuildKit, apko + melange o
 | Blast-radius rules | Inputs and thresholds for L4 auto-merge | Phase 3 |
 | Usage accounting | Budgets in tokens; API-price equivalent for dashboards | Phase 5 |
 | API versioning | `v1alpha1` → `v1beta1`, conversion; JSON Schema for `.factory.yaml` | Phase 4 |
-| Portfolio deliverables | README narrative, diagrams, demo recordings per phase, comparison write-up vs Kelos, Sandcastle and gh-aw | Start capturing in Phase 0 |
+| Showcase deliverables | README narrative, diagrams, demo recordings per phase, comparison write-up vs Kelos, Sandcastle and gh-aw | Start capturing in Phase 0 |
 
 ---
 
@@ -150,7 +150,7 @@ Candidates if revisited: Podman + buildah, standalone BuildKit, apko + melange o
 | Risk | Likelihood | Fallback |
 |---|---|---|
 | Max plan terms or billing for `claude -p` change | High (changed several times in 2026) | Switch the Secret to an API key; lower volume |
-| Factory exhausts the limits Nick needs for interactive work | Medium | Schedule windows, one slot, pause switch |
+| Factory exhausts the limits the maintainer needs for interactive work | Medium | Schedule windows, one slot, pause switch |
 | Claude Code flags or event format change | Medium | Pinned version; nightly contract test; Renovate PR runs it |
 | Matt Pocock's skills are renamed or restructured | Medium | Vendored, pinned copies; upgrade deliberately |
 | Locally written tickets are too vague for unattended runs | Medium | Readiness checklist; `needs-info` hand-back; tune `to-tickets` use in Phase 0 |

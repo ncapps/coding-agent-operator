@@ -4,7 +4,7 @@ Guidance for Claude Code sessions in this repository.
 
 ## What this project is
 
-`coding-agent-tools` is a monorepo of plugins and tools for working with coding agents. Nick plans with grilling, specs and tickets; the tools make planning easier to follow and execute the tickets unattended.
+`coding-agent-tools` is a monorepo of plugins and tools for working with coding agents. The maintainer plans with grilling, specs and tickets; the tools make planning easier to follow and execute the tickets unattended.
 
 | Product | What it is | Directory |
 |---|---|---|
@@ -18,7 +18,7 @@ Each product picks its own language and toolchain.
 
 ## How work is split
 
-- **Nick plans and owns architecture decisions.** Planning happens interactively, here, with Matt Pocock's skills: `/grill-with-docs` → `/to-spec` → `/to-tickets`.
+- **The maintainer plans and owns architecture decisions.** Planning happens interactively, here, with Matt Pocock's skills: `/grill-with-docs` → `/to-spec` → `/to-tickets`.
 - **The factory executes tickets.** Planning stages never run inside the factory in v1. The ticket is the factory's only input from planning; it never reads a decision graph or spec.
 - Don't settle an architecture question on your own. Raise it, grill it, and record the outcome as an ADR in `docs/adr/`.
 
@@ -59,10 +59,10 @@ Only some planning documents last. Don't create new long-lived copies of working
 Read `docs/git-workflow.md` before your first branch, commit or PR in a session.
 
 - Work on one branch per session, named `<type>/<issue>-<slug>`, in its own worktree when sessions run in parallel. `factory/` branches belong to the factory.
-- Start from an issue. If none exists, ask Nick before creating one.
+- Start from an issue. If none exists, ask the maintainer before creating one.
 - Commit signed, keeping the `Co-Authored-By` trailer. Let the lefthook hooks run.
-- Open the PR with a Conventional Commit title and a body that follows `.github/pull_request_template.md`, including `Closes #N`. Nick merges.
-- GitHub settings belong to Nick: print `gh api` commands for him to run.
+- Open the PR with a Conventional Commit title and a body that follows `.github/pull_request_template.md`, including `Closes #N`. The maintainer merges.
+- GitHub settings belong to the maintainer: print `gh api` commands for them to run.
 
 ## Markers in the docs
 

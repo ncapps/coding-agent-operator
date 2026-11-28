@@ -46,7 +46,7 @@ apiVersion: <api-group>/v1alpha1   # see brief §12, question 13
 kind: Project
 metadata: { name: go-service }
 spec:
-  repo: nick/go-service
+  repo: example/go-service
   githubApp: { installationSecretRef: github-app }
   agentImage: ghcr.io/ncapps/coding-agent-operator/agent-go@sha256:...
   model: { implement: <model> }
@@ -125,6 +125,6 @@ spec:
 - **`CLAUDE.md`:** architecture summary, make targets, "every reconciler change needs an envtest case", CRD change rules (regenerate, update samples, ADR for API changes).
 - **Make targets:** `generate`, `manifests`, `lint`, `test`, `e2e`, `verify`, `dev-up`, `dev-down`, `pause`, `resume`.
 - **Branch protection on `main`:** PR required, `verify` and e2e required, linear history.
-- **CODEOWNERS:** Nick on everything; `operator/api/**` always needs owner review.
+- **CODEOWNERS:** the maintainer on everything; `operator/api/**` always needs owner review.
 - **Public-repo hygiene:** secret scanning with push protection; transcripts redacted before commit, with a CI check for unredacted patterns.
 - **Self-hosting:** after the definition of done passes, the factory repo gets its own `Project` at L2.

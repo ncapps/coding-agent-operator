@@ -16,9 +16,9 @@ The workflow has to stay simple for one person. GitHub should enforce it, not ha
 - **Squash merge only.** The PR title becomes the commit title and follows Conventional Commits. The commit body is the branch's commit messages, so `Co-Authored-By` trailers survive.
 - **Signed commits** (SSH). The `main` ruleset requires signatures; GitHub signs the squash commits it creates.
 - **Required checks** from `pr.yml`: PR title lint, markdownlint, offline link check, gitleaks. Local hooks (lefthook) run fast checks only.
-- **No required approvals, and no bypass actors.** Nick merges every PR, and merging is the review.
-- **CODEOWNERS is advisory.** It requests Nick's review but enforces nothing.
-- **Local Claude Code sessions use Nick's `gh` login** to push and open PRs. One branch per session; worktrees for parallel sessions.
+- **No required approvals, and no bypass actors.** The maintainer merges every PR, and merging is the review.
+- **CODEOWNERS is advisory.** It requests the maintainer's review but enforces nothing.
+- **Local Claude Code sessions use the maintainer's `gh` login** to push and open PRs. One branch per session; worktrees for parallel sessions.
 - **ADRs ship in the same PR** as the decision they record.
 - **Generated code is committed**, with a CI drift check once code exists. Releases (release-please, `v0.x` tags) start in Phase 1.
 
@@ -28,8 +28,8 @@ The workflow has to stay simple for one person. GitHub should enforce it, not ha
 |---|---|
 | GitHub Flow with merge commits | Merge commits clutter history, and branch commits would each need Conventional Commit messages for release-please. Squash gives one checked commit per PR |
 | Direct pushes to `main` | Skips the CI gate, so `main` can go red under work that branches from it |
-| Required approvals as a solo maintainer | GitHub never lets authors approve their own PRs. Every PR is opened under Nick's account, so each one would need a bypass. It adds a click and no information |
-| Separate GitHub identity for local sessions (machine user or GitHub App) | A second account, token rotation and a signing key, for little gain while Nick watches sessions and merges every PR |
+| Required approvals as a solo maintainer | GitHub never lets authors approve their own PRs. Every PR is opened under the maintainer's account, so each one would need a bypass. It adds a click and no information |
+| Separate GitHub identity for local sessions (machine user or GitHub App) | A second account, token rotation and a signing key, for little gain while the maintainer watches sessions and merges every PR |
 
 ## Consequences
 

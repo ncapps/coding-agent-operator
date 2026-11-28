@@ -2,7 +2,7 @@
 
 How changes reach `main`. [ADR 0002](adr/0002-git-workflow.md) records why.
 
-There's one maintainer (Nick). Claude Code sessions do most of the commits. Claude commits and opens PRs; Nick merges.
+There's one maintainer. Claude Code sessions do most of the commits. Claude commits and opens PRs; the maintainer merges.
 
 ## Rules
 
@@ -94,16 +94,16 @@ git fetch origin && git rebase origin/main && git push --force-with-lease
 Each Claude Code session gets its own worktree and branch, so sessions never share a working tree.
 
 ```sh
-git worktree add ../coding-agent-operator-12 -b feat/12-stage-run-status origin/main
-cd ../coding-agent-operator-12 && mise install && lefthook install && claude
+git worktree add ../coding-agent-tools-12 -b feat/12-stage-run-status origin/main
+cd ../coding-agent-tools-12 && mise install && lefthook install && claude
 
 git worktree list
-git worktree remove ../coding-agent-operator-12   # after the PR merges
+git worktree remove ../coding-agent-tools-12   # after the PR merges
 ```
 
 ## Merging
 
-Nick merges. Wait for all checks to pass, then:
+The maintainer merges. Wait for all checks to pass, then:
 
 ```sh
 gh pr merge 12 --squash --delete-branch
@@ -126,7 +126,7 @@ Actions are pinned to full commit SHAs. Tool versions in `pr.yml` match `.mise.t
 
 ## Repository settings
 
-Applied by Nick with `gh api`, not by agents.
+Applied by the maintainer with `gh api`, not by agents.
 
 | Setting | Value |
 |---|---|
