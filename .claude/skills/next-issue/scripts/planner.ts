@@ -21,8 +21,10 @@ export interface SnapshotIssue {
   /** Numbers of open issues that block this one. */
   openBlockers: number[];
   /** Pull requests that close this issue. */
-  pullRequests: { number: number; state: "OPEN" | "CLOSED" | "MERGED" }[];
+  pullRequests: { number: number; state: PullRequestState }[];
 }
+
+export type PullRequestState = "OPEN" | "CLOSED" | "MERGED";
 
 export type Column = "Backlog" | "Ready" | "In progress" | "In review" | "Done";
 
@@ -47,18 +49,18 @@ const READY_LABELS = ["ready-for-agent", "ready-for-human"];
 const ISSUE_BRANCH = /^(?:origin\/)?[a-z]+\/(\d+)-[^/]+$/;
 
 export function plan(snapshot: Snapshot): Plan {
-  const branched = issuesWithBranches(snapshot.branches);
+  const issuesWithBranch = issueNumbersInBranches(snapshot.branches);
   return {
     cards: snapshot.issues.map((issue) => ({
       number: issue.number,
       title: issue.title,
-      column: columnOf(issue, branched.has(issue.number)),
+      column: columnOf(issue, issuesWithBranch.has(issue.number)),
       isSpec: isSpec(issue),
     })),
   };
 }
 
-function issuesWithBranches(branches: string[]): Set<number> {
+function issueNumbersInBranches(branches: string[]): Set<number> {
   const numbers = new Set<number>();
   for (const branch of branches) {
     const match = ISSUE_BRANCH.exec(branch);
@@ -78,7 +80,7 @@ function columnOf(issue: SnapshotIssue, hasBranch: boolean): Column {
   if (issue.state === "CLOSED") return "Done";
   if (issue.pullRequests.some((pr) => pr.state === "OPEN")) return "In review";
   if (hasBranch) return "In progress";
-  if (isSpec(issue) && issue.subIssues.length > 0) return "In progress";
+  if (issue.subIssues.length > 0) return "In progress"; // An open issue with sub-issues is a spec.
   if (isTicket(issue)) return "Ready";
   return "Backlog";
 }

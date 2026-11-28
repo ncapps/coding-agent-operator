@@ -2,7 +2,7 @@
 // and git data. It only reads, and it holds no column logic: that is the planner's.
 
 import { execFileSync } from "node:child_process";
-import type { Snapshot, SnapshotIssue } from "./planner.ts";
+import type { PullRequestState, Snapshot, SnapshotIssue } from "./planner.ts";
 
 const ISSUES_QUERY = `
 query($owner: String!, $name: String!, $endCursor: String) {
@@ -31,7 +31,7 @@ interface IssueNode {
   parent: { number: number } | null;
   subIssues: { nodes: { number: number }[] };
   blockedBy: { nodes: { number: number; state: "OPEN" | "CLOSED" }[] };
-  closedByPullRequestsReferences: { nodes: { number: number; state: "OPEN" | "CLOSED" | "MERGED" }[] };
+  closedByPullRequestsReferences: { nodes: { number: number; state: PullRequestState }[] };
 }
 
 interface IssuesPage {
