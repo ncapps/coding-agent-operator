@@ -1,6 +1,6 @@
 ---
 name: Ticket
-about: A vertical slice of planned work, in the same shape /to-tickets produces
+about: An independently shippable piece of planned work, in the same shape /to-tickets produces
 title: ""
 labels: needs-triage
 ---
