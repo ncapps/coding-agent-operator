@@ -33,7 +33,7 @@ How the design reached its current shape (Nov 23–26, 2026), written so later s
 | 17 | **CI never uses the subscription**: `fake-claude` replays recorded transcripts; a nightly contract test uses an API key | Cost, and keeping the subscription for ordinary individual use | Real `claude` in CI |
 | 18 | **Home hardware: 2018 Intel Mac mini**, images amd64 | Matches CI and enterprise; no multi-arch needed at home | Apple Silicon assumptions |
 | 19 | **Positioning: governed, unattended execution** | Orchestration alone is commodity (Kelos, gh-aw, Copilot agent, Sandcastle) | Pitching orchestration or throughput |
-| 20 | **Name: `coding-agent-operator`** | See ADR 0001 | `factory`, `jidoka`, `nightshift`, nautical names |
+| 20 | **Name: `coding-agent-operator`** | Self-describing, follows the `<thing>-operator` convention, few collisions | `factory` (Factory.ai), `jidoka` and `nightshift` (taken by agent projects), nautical names |
 | 21 | **Git workflow: trunk-based, PR-only, squash merge, no required approvals** | See ADR 0002 | GitHub Flow with merge commits; direct pushes to `main`; required approvals; a separate GitHub identity for local sessions |
 
 ## Facts gathered (re-verify before relying on them)

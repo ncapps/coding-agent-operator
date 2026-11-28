@@ -363,6 +363,7 @@ Estimates assume one engineer part-time and are rough; expect slippage. Each pha
 
 | # | Phase | Outcome | Estimate |
 |---|---|---|---|
+| — | **Architect, slices 1–3** | Read-only decision graph and diagrams, then decision cards, then spec and ticket views. Focus moves to Phase 0 once slice 3 is done and one factory spec has gone through the architect. See `docs/planning-tool-brief.md` | — |
 | 0 | **Prove the loop** | A script runs `claude -p` in one container on a seeded issue and opens a PR. Transcripts and token measurements captured | ~1 wk |
 | 1 | **Thin operator MVP** | Label an issue → draft PR → CI gate, on k3d, at L2 | 3–5 wks |
 | 2 | **Frontier pickup** | The factory follows the blocking edges on locally created tickets and picks each one up as its blockers merge. Adds the readiness check, `needs-info` hand-back, `WorkItem`, webhooks | 2–3 wks |
