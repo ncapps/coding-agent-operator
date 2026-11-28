@@ -17,8 +17,12 @@ are unchanged. Only the order of work changes.
 
 - Grilling sessions, specs and tickets are long walls of text. It is hard
   to follow the architecture and the decisions being made.
-- Planning is where the architecture gets decided, and I stay responsible
-  for those decisions. Better planning tooling pays off on every later
+- The tool's purpose is better communication between the human and the
+  agent during planning, in both directions: the agent's proposals and
+  settled decisions become visible, and the human's answers reach the
+  agent as structured choices, not free text.
+- Planning is where the architecture gets decided, and the maintainer stays
+  responsible for those decisions. Better planning tooling pays off on every later
   piece of work, including the operator.
 - Using the tool to plan the operator makes the operator its first real
   test.
@@ -107,6 +111,8 @@ done and one operator spec has gone through the tool end to end.
 
 ## Open questions
 
+- How do we measure whether the architect improves human–LLM
+  communication? Tracked in issue #9.
 - What is the decision graph schema and file format, and is there one file
   per planning session or one per project?
 - Which is the source of truth when the decision graph, ADRs and glossary

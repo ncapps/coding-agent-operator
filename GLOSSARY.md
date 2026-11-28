@@ -1,8 +1,12 @@
 # coding-agent-tools
 
-Plugins and tools for working with coding agents. Nick plans the work in interactive sessions; the **architect** makes planning easy to follow, and the **factory** executes the resulting tickets unattended.
+Plugins and tools for working with coding agents. The maintainer plans the work in interactive sessions; the **architect** makes planning easy to follow, and the **factory** executes the resulting tickets unattended.
 
 ## Planning
+
+**Maintainer**:
+The trusted person who plans the work, labels tickets for the factory, answers its questions, reviews and merges pull requests, and owns the repo settings.
+_Avoid_: owner, user, operator (that is how the factory is built)
 
 **Architect**:
 The local tool that runs beside a planning session, keeps its decisions as data and shows them as a decision graph and diagrams.
@@ -29,7 +33,7 @@ A decision that is costly to reverse. Asked before two-way doors, and never sett
 _Avoid_: irreversible decision
 
 **Two-way door**:
-A decision that is cheap to reverse. The agent proposes a default and moves on unless Nick objects.
+A decision that is cheap to reverse. The agent proposes a default and moves on unless the maintainer objects.
 _Avoid_: reversible decision
 
 **Deferred decision**:
@@ -98,7 +102,7 @@ A file or folder whose change always forces human review.
 One unit of concurrent Claude Code capacity.
 
 **Reserve**:
-Subscription capacity held back for Nick's own interactive use.
+Subscription capacity held back for the maintainer's own interactive use.
 
 **Golden task**:
 A fixture repo state plus hidden tests, used for evals.

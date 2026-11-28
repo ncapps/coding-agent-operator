@@ -1,8 +1,7 @@
 # coding-agent-operator — Project Brief
 
 > **Status:** Draft v1.0 (2026-11-26). Moved into the project repository; project named `coding-agent-operator`.
-> **Owner:** Nick Capps
-> **Repo:** [`ncapps/coding-agent-operator`](https://github.com/ncapps/coding-agent-operator). This file lives at `docs/brief.md`. "The factory" below means this project.
+> **Repo:** [`ncapps/coding-agent-tools`](https://github.com/ncapps/coding-agent-tools), in `factory/`. This file lives at `docs/brief.md`. "The factory" below means this project.
 > **v1 scope:** GitHub as the only tracker and Claude Code as the only harness.
 
 This brief is the vision and architecture summary. Detail lives in companion documents:
@@ -20,6 +19,8 @@ Markers: **(decision)** is a proposed decision that should become an ADR or be o
 ---
 
 ## 0. Why
+
+> The lasting summary of why the project exists, the problems it solves and its measurable outcome is in the [README](../README.md). This section keeps the factory detail.
 
 **You do the planning. The factory does the overnight shift, safely.**
 
@@ -53,12 +54,12 @@ A self-hosted **software factory** that turns GitHub issues into reviewed pull r
 
 It serves two goals:
 
-1. **A working agentic development workflow** for Nick's portfolio projects. One factory serves many consumer repos.
-2. **A platform-engineering portfolio piece** showing Kubernetes API design, secure sandboxing, policy enforcement, plugin delivery and observability.
+1. **A working agentic development workflow** for the maintainer's projects. One factory serves many consumer repos.
+2. **A reference design for governed agent execution on Kubernetes**: API design, secure sandboxing, policy enforcement, plugin delivery and observability.
 
 ### Goals (v1)
 
-- **Planning is interactive and local.** Nick runs `grill-with-docs`, `to-spec` and `to-tickets` in Claude Code on his own machine. The tickets they publish are the hand-off to the factory.
+- **Planning is interactive and local.** The maintainer runs `grill-with-docs`, `to-spec` and `to-tickets` in Claude Code on their own machine. The tickets they publish are the hand-off to the factory.
 - **Execution is automatic.** The factory picks up ready tickets, implements them with `implement` → `tdd`, and raises PRs.
 - Autonomy is configurable per project and per stage.
 - Claude Code (`claude -p`) is the one harness and GitHub (a GitHub App) the one tracker. Each sits behind a Go interface.
@@ -79,7 +80,7 @@ It serves two goals:
 
 **Merged PRs per week in consumer projects.** PRs to the factory repo don't count. This guards against the factory mostly working on itself.
 
-### Minimum portfolio v1
+### Minimum v1
 
 Phases 0–3 of the roadmap (§11) make a complete, demoable v1. Phases 4–7 are extensions and can be cut or shrunk.
 
@@ -105,7 +106,7 @@ Phases 0–3 of the roadmap (§11) make a complete, demoable v1. Phases 4–7 ar
 | Term | Meaning |
 |---|---|
 | **Factory** | The operator, plugins and evals in this repo |
-| **Consumer project** | A portfolio repo on GitHub that the factory works on |
+| **Consumer project** | A repo on GitHub that the factory works on |
 | **Harness** | An agent CLI driven headlessly. v1: Claude Code |
 | **Tracker** | The issue and PR system holding workflow state. v1: GitHub |
 | **Runtime** | What executes an agent session. Starts as a Kubernetes Job; agent-sandbox later |
@@ -117,7 +118,7 @@ Phases 0–3 of the roadmap (§11) make a complete, demoable v1. Phases 4–7 ar
 | **Writer** | The component that pushes branches and opens PRs with a short-lived write token |
 | **Protected path** | A file or folder whose change always forces human review |
 | **Session slot** | One unit of concurrent Claude Code capacity |
-| **Reserve** | Subscription capacity held back for Nick's own interactive use |
+| **Reserve** | Subscription capacity held back for the maintainer's own interactive use |
 | **Golden task** | A fixture repo state plus hidden tests, used for evals |
 
 ---
@@ -128,7 +129,7 @@ Skills come from [`mattpocock/skills`](https://github.com/mattpocock/skills), ve
 
 | Stage | Skill | Where it runs | Notes |
 |---|---|---|---|
-| intake | `triage` | **Local**, interactive | Nick, in Claude Code |
+| intake | `triage` | **Local**, interactive | The maintainer, in Claude Code |
 | align | `grill-with-docs` | **Local**, interactive | Updates `GLOSSARY.md` and ADRs in the repo |
 | spec | `to-spec` | **Local**, interactive | Publishes a spec issue |
 | breakdown | `to-tickets` | **Local**, interactive | Publishes sub-issues with blocking edges, labelled `ready-for-agent` |
@@ -137,17 +138,17 @@ Skills come from [`mattpocock/skills`](https://github.com/mattpocock/skills), ve
 | merge | `pr` + branch protection | Human, or factory at L4 | Never automatic for protected paths |
 | learn | `retro` | **Local** at first | Run after reviewing a batch of factory PRs |
 
-**The hand-off.** Because Nick runs `to-tickets` under his own GitHub identity, the `ready-for-agent` label is applied by a trusted collaborator, which is exactly what the factory requires before pickup.
+**The hand-off.** Because the maintainer runs `to-tickets` under their own GitHub identity, the `ready-for-agent` label is applied by a trusted collaborator, which is exactly what the factory requires before pickup.
 
-**When a ticket is unclear.** The agent doesn't guess. It writes its questions to `.factory/questions.md` and stops. The operator posts them on the issue, swaps the label to `needs-info`, and Nick answers locally and relabels.
+**When a ticket is unclear.** The agent doesn't guess. It writes its questions to `.factory/questions.md` and stops. The operator posts them on the issue, swaps the label to `needs-info`, and the maintainer answers locally and relabels.
 
 ### Autonomy presets
 
 Autonomy governs the factory's side only: pickup, review and merge.
 
-- **L1 Assist:** the factory acts on one ticket at a time, only when Nick labels it. PRs stay draft.
-- **L2 Supervised:** the factory picks up every `ready-for-agent` ticket and Nick reviews every PR. *(Phase 1 runs here.)*
-- **L3 Delegated:** an agent review pre-filters each PR; Nick only approves the merge.
+- **L1 Assist:** the factory acts on one ticket at a time, only when the maintainer labels it. PRs stay draft.
+- **L2 Supervised:** the factory picks up every `ready-for-agent` ticket and the maintainer reviews every PR. *(Phase 1 runs here.)*
+- **L3 Delegated:** an agent review pre-filters each PR; the maintainer only approves the merge.
 - **L4 Autonomous:** auto-merge when checks pass, the diff touches no protected path, and the change is low blast radius.
 - **L5 Dark:** everything auto. Demo only, on a toy repo.
 
@@ -245,10 +246,10 @@ A missing PR body gets a generated fallback rather than failing the run. **(veri
 
 **Day-to-day flow:**
 
-1. Nick opens Claude Code in the consumer repo and runs `/grill-with-docs` → `/to-spec` → `/to-tickets`.
+1. The maintainer opens Claude Code in the consumer repo and runs `/grill-with-docs` → `/to-spec` → `/to-tickets`.
 2. `to-tickets` publishes sub-issues with blocking edges and the `ready-for-agent` label.
 3. The factory picks up each ticket once its blockers are merged (Phase 1: any labelled ticket; Phase 2: frontier-aware).
-4. Nick reviews PRs, answers any `needs-info` questions, and runs `/retro` on the batch.
+4. The maintainer reviews PRs, answers any `needs-info` questions, and runs `/retro` on the batch.
 
 **Ticket readiness check (Phase 2).** Before pickup the operator checks the ticket against a short checklist, drafted in Phase 0: acceptance criteria present, blockers closed, no protected-path work implied. Failing tickets are labelled `needs-info` with the reason, and no session is spent on them.
 
@@ -268,7 +269,7 @@ The controller never executes repo code itself.
 
 ### 5.6 Scheduling and quota
 
-- The Max subscription is shared between projects **and with Nick's own Claude Code use**.
+- The Max subscription is shared between projects **and with the maintainer's own Claude Code use**.
 - `FactoryConfig` sets the number of session slots (1–2 at home) and **schedule windows** when the factory may start runs, for example overnight and working hours away from the desk.
 - On "usage limit reached", the run is requeued until the window resets and no new runs start.
 - Remaining quota can't be read programmatically **(verify)**, so the reserve is enforced by slots, windows and backoff.
@@ -368,7 +369,7 @@ Estimates assume one engineer part-time and are rough; expect slippage. Each pha
 | 1 | **Thin operator MVP** | Label an issue → draft PR → CI gate, on k3d, at L2 | 3–5 wks |
 | 2 | **Frontier pickup** | The factory follows the blocking edges on locally created tickets and picks each one up as its blockers merge. Adds the readiness check, `needs-info` hand-back, `WorkItem`, webhooks | 2–3 wks |
 | 3 | **Review and autonomy** | Review stage, L1–L4 presets, protected paths, auto-merge rules | 2–3 wks |
-| — | *Minimum portfolio v1 complete* | | |
+| — | *Minimum v1 complete* | | |
 | 4 | **Plugin extraction** | Second consumer repo; `factory-go` and marketplace; `ToolchainProfile` | 2 wks |
 | 5 | **Multi-project scheduling** | Fair-share slots, reserve windows, third consumer | 2 wks |
 | 6 | **Evals and dashboards** | Golden-task suite, Grafana, traces | 2 wks |
@@ -376,7 +377,7 @@ Estimates assume one engineer part-time and are rough; expect slippage. Each pha
 | 8 | **In-factory planning (optional)** | Async triage and grilling over issue comments, with suspend and resume | — |
 | v2 | **Multi-harness, GitLab** | Codex and Gemini drivers, GitLab tracker | — |
 
-**Cut lines:** Phase 1 alone is a valid demo. Phases 0–3 are the portfolio v1. Drop Phase 5 first, then shrink Phase 6 to "golden tasks only".
+**Cut lines:** Phase 1 alone is a valid demo. Phases 0–3 are the minimum v1. Drop Phase 5 first, then shrink Phase 6 to "golden tasks only".
 
 ---
 
@@ -388,13 +389,13 @@ Estimates assume one engineer part-time and are rough; expect slippage. Each pha
 4. What counts as "low blast radius" for L4: the `pr` skill's one-way/two-way door call, file paths, or diff size?
 5. Per-ticket branches, or `implement-spec` across the frontier on one integration branch?
 6. Is a fresh Claude session on a different model independent enough for review?
-7. Which schedule windows and slot count protect Nick's own Claude Code use?
+7. Which schedule windows and slot count protect the maintainer's own Claude Code use?
 8. How many tickets fit in one Max usage window? (Phase 0 measures this.)
 9. Prebuilt agent images per language mix, or tools installed per repo from `.mise.toml`?
 10. Monorepo for plugins long-term, or split once consumers exist?
 11. How is the factory's own development kept from crowding out consumer work?
 12. What is the default protected-path list, and can a project extend but never shrink it?
-13. Which Kubernetes API group? It must be a DNS name Nick controls (for example `agents.<domain>`), chosen before the first CRD is generated, because renaming it later is painful.
+13. Which Kubernetes API group? It must be a DNS name the maintainer controls (for example `agents.<domain>`), chosen before the first CRD is generated, because renaming it later is painful.
 14. Do plugins keep the `factory-*` prefix (`factory-go`, `factory-workflow`), or take a prefix tied to the project name?
 
 ---
