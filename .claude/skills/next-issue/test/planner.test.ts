@@ -130,29 +130,33 @@ function snapshotOf(...issues: SnapshotIssue[]): Snapshot {
 }
 
 test("a ticket with an open blocker is Ready, flagged blocked with its blockers, has no click and is never recommended", () => {
-  const snapshot = snapshotOf(issue(40, { labels: ["ready-for-agent"], openBlockers: [38, 39] }));
+  const snapshot = snapshotOf(issue(40, { labels: ["ready-for-agent"], openBlockers: [38, 39] }), issue(49, { title: "Idea" }));
   const card = cardOf(snapshot, 40);
   assert.equal(card.column, "Ready");
   assert.deepEqual(card.flags, [{ kind: "blocked", blockers: [38, 39] }]);
   assert.equal(card.command, null);
-  assert.equal(plan(snapshot).recommendation, null);
+  assert.equal(plan(snapshot).recommendation, 49);
 });
 
 test("a needs-info issue is in Backlog, flagged waiting on you, has no click and is never recommended", () => {
-  const snapshot = snapshotOf(issue(41, { labels: ["needs-info"] }));
+  const snapshot = snapshotOf(issue(41, { labels: ["needs-info"] }), issue(49, { title: "Idea" }));
   const card = cardOf(snapshot, 41);
   assert.equal(card.column, "Backlog");
   assert.deepEqual(card.flags, [{ kind: "waiting-on-you" }]);
   assert.equal(card.command, null);
-  assert.equal(plan(snapshot).recommendation, null);
+  assert.equal(plan(snapshot).recommendation, 49);
 });
 
 test("a spec with tickets is In progress, has no click and is never recommended", () => {
-  const snapshot = snapshotOf(issue(42, { title: "Spec: with tickets", subIssues: [43] }), issue(43, { state: "CLOSED", parent: 42 }));
+  const snapshot = snapshotOf(
+    issue(42, { title: "Spec: with tickets", subIssues: [43] }),
+    issue(43, { state: "CLOSED", parent: 42 }),
+    issue(49, { title: "Idea" }),
+  );
   const card = cardOf(snapshot, 42);
   assert.equal(card.column, "In progress");
   assert.equal(card.command, null);
-  assert.equal(plan(snapshot).recommendation, null);
+  assert.equal(plan(snapshot).recommendation, 49);
 });
 
 test("a spec without tickets has the to-tickets command", () => {
@@ -185,7 +189,7 @@ test("an In review card's command reviews its open pull request", () => {
   );
   assert.equal(
     cardOf(snapshot, 47).command,
-    "/mattpocock-skills:code-review main, on pull request #102 for #47. Check it out first with gh pr checkout 102.",
+    "/mattpocock-skills:code-review origin/main, on pull request #102 for #47. First run gh pr checkout 102, so HEAD is the pull request.",
   );
 });
 
@@ -197,16 +201,20 @@ test("a Backlog idea starts grilling that ends with to-spec and closes the idea 
   );
 });
 
-/** The order recommendations come in: plan, take the recommended issue off the board, repeat. */
-function recommendationOrder(snapshot: Snapshot): number[] {
-  const order: number[] = [];
+/** Recommendations in the order they come: plan, take the recommended issue off the board, repeat. */
+function recommendations(snapshot: Snapshot): [number, string][] {
+  const found: [number, string][] = [];
   let issues = snapshot.issues;
   for (;;) {
-    const { recommendation } = plan({ ...snapshot, issues });
-    if (recommendation === null) return order;
-    order.push(recommendation);
+    const { recommendation, reason } = plan({ ...snapshot, issues });
+    if (recommendation === null) return found;
+    found.push([recommendation, reason]);
     issues = issues.filter((i) => i.number !== recommendation);
   }
+}
+
+function recommendationOrder(snapshot: Snapshot): number[] {
+  return recommendations(snapshot).map(([number]) => number);
 }
 
 test("recommendations: In review (oldest pull request first), then Ready, then Backlog specs, then ideas (oldest first)", () => {
@@ -258,25 +266,19 @@ test("with no clickable card there is no recommendation, and the reason says why
 });
 
 test("each recommendation comes with a one-line reason", () => {
-  let issues = [
+  const snapshot = snapshotOf(
     issue(80, { title: "Idea" }),
     issue(81, { title: "Spec: no tickets" }),
     issue(82, { title: "Spec: with tickets", subIssues: [83] }),
     issue(83, { labels: ["ready-for-agent"], parent: 82 }),
     issue(84, { labels: ["ready-for-human"] }),
     issue(85, { labels: ["ready-for-agent"], pullRequests: [{ number: 300, state: "OPEN" }] }),
-  ];
-  const reasons: [number | null, string][] = [];
-  for (let i = 0; i < 5; i++) {
-    const { recommendation, reason } = plan(snapshotOf(...issues));
-    reasons.push([recommendation, reason]);
-    issues = issues.filter((x) => x.number !== recommendation);
-  }
-  assert.deepEqual(reasons, [
+  );
+  assert.deepEqual(recommendations(snapshot), [
     [85, "Pull request #300 for #85 is the oldest waiting for review; reviews come first."],
     [83, "#83 is the next ready ticket of #82, the oldest spec with a ready ticket."],
-    [84, "#84 is the lowest-numbered ready ticket outside a spec, and no spec has one ready."],
-    [81, "Spec #81 is the oldest with no tickets yet, and no ticket is ready."],
-    [80, "#80 is the oldest idea, and no ticket or spec is waiting."],
+    [84, "#84 is the lowest-numbered ready ticket outside a spec, and no spec has one that can be started."],
+    [81, "Spec #81 is the oldest with no tickets yet, and no ticket can be started."],
+    [80, "#80 is the oldest idea, and no review, ticket or spec can be started."],
   ]);
 });

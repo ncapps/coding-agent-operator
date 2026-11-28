@@ -10,7 +10,7 @@ const indent = " ".repeat(2 + width + 2);
 
 const recommended = cards.find((card) => card.number === recommendation);
 const next = recommended
-  ? [`Next: #${recommended.number}  ${recommended.title}`, `  ${reason}`, `  ${claude(recommended.command)}`]
+  ? [`Next: #${recommended.number}  ${recommended.title}`, `  ${reason}`, `  ${claudeLine(recommended.command ?? "")}`]
   : ["Next: nothing", `  ${reason}`];
 
 const sections = COLUMNS.map((column) => {
@@ -25,7 +25,7 @@ function cardRows(card: Card): string[] {
   const number = `#${card.number}`.padEnd(width);
   const flags = card.flags.map((flag) => `  [${flagText(flag)}]`).join("");
   const title = `  ${number}  ${card.isSpec ? "[spec] " : ""}${card.title}${flags}`;
-  return card.command === null ? [title] : [title, `${indent}${claude(card.command)}`];
+  return card.command === null ? [title] : [title, `${indent}${claudeLine(card.command)}`];
 }
 
 function flagText(flag: Flag): string {
@@ -38,6 +38,6 @@ function flagText(flag: Flag): string {
 }
 
 /** A `claude "<command>"` line, safe to paste into a POSIX shell. */
-function claude(command: string | null): string {
-  return `claude "${(command ?? "").replace(/[\\"$`]/g, (c) => `\\${c}`)}"`;
+function claudeLine(command: string): string {
+  return `claude "${command.replace(/[\\"$`]/g, (c) => `\\${c}`)}"`;
 }

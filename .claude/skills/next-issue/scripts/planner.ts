@@ -1,4 +1,5 @@
-// Board planner: works out each issue's column from a snapshot of GitHub and git.
+// Board planner: works out each issue's column, flags and click command from a snapshot
+// of GitHub and git, and picks the recommendation.
 // Pure: no network or disk access. The Snapshot and Plan types are the contract
 // between the scripts and the skill's instructions; keep them small and stable.
 
@@ -108,7 +109,7 @@ function candidateOf(issue: SnapshotIssue, card: Card, specs: Map<number, Snapsh
     case "Ready": {
       const spec = issue.parent === null ? undefined : specs.get(issue.parent);
       if (spec === undefined) {
-        return { number: n, rank: [2, n], reason: `#${n} is the lowest-numbered ready ticket outside a spec, and no spec has one ready.` };
+        return { number: n, rank: [2, n], reason: `#${n} is the lowest-numbered ready ticket outside a spec, and no spec has one that can be started.` };
       }
       const position = spec.subIssues.indexOf(n);
       return {
@@ -119,8 +120,8 @@ function candidateOf(issue: SnapshotIssue, card: Card, specs: Map<number, Snapsh
     }
     case "Backlog":
       return card.isSpec
-        ? { number: n, rank: [3, n], reason: `Spec #${n} is the oldest with no tickets yet, and no ticket is ready.` }
-        : { number: n, rank: [4, n], reason: `#${n} is the oldest idea, and no ticket or spec is waiting.` };
+        ? { number: n, rank: [3, n], reason: `Spec #${n} is the oldest with no tickets yet, and no ticket can be started.` }
+        : { number: n, rank: [4, n], reason: `#${n} is the oldest idea, and no review, ticket or spec can be started.` };
     default:
       throw new Error(`#${n} in ${card.column} can't be recommended`);
   }
@@ -143,7 +144,7 @@ function whyNothingToStart(cards: Card[]): string {
     [flagged, "flagged"],
     [inProgress, "in progress"],
   ] as const;
-  return `Nothing to start: ${counts.filter(([count]) => count > 0).map(([count, why]) => `${count} ${why}`).join(", ")}.`;
+  return `Nothing to start: ${counts.filter(([count]) => count > 0).map(([count, label]) => `${count} ${label}`).join(", ")}.`;
 }
 
 function flagsOf(issue: SnapshotIssue): Flag[] {
@@ -180,7 +181,7 @@ function commandOf(issue: SnapshotIssue, column: Column): string | null {
   }
   if (column === "In review") {
     const pr = oldestOpenPullRequest(issue);
-    return `/mattpocock-skills:code-review main, on pull request #${pr} for #${n}. Check it out first with gh pr checkout ${pr}.`;
+    return `/mattpocock-skills:code-review origin/main, on pull request #${pr} for #${n}. First run gh pr checkout ${pr}, so HEAD is the pull request.`;
   }
   if (column === "Backlog") {
     if (isSpec(issue)) return `/mattpocock-skills:to-tickets #${n}`;
